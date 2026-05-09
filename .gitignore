@@ -1,0 +1,64 @@
+# Vivado generated directories
+.cache/
+.hw/
+.ip_user_files/
+.sim/
+.srcs/
+.xpr.user/
+.runs/
+.gen/
+.xsim/
+.tmp/
+
+# Logs and reports
+*.log
+*.jou
+*.str
+*.pb
+*.wdb
+*.wcfg
+
+# Backup / temp files
+*~
+*.bak
+*.tmp
+
+# Generated bitstreams and binaries
+*.bit
+*.bin
+*.mmi
+*.ltx
+
+# SDK / Vitis / workspace
+.sdk/
+.vitis/
+workspace/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Simulation outputs
+*.vcd
+*.wlf
+*.fsdb
+
+# HLS generated files
+solution/
+impl/
+syn/
+
+# Keep important project files
+!*.xpr
+!*.bd
+!*.tcl
+!*.xdc
+!*.v
+!*.sv
+!*.vh
+!*.vhd
+!*.xci

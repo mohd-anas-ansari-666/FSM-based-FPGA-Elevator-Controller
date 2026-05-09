@@ -1,0 +1,90 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Thu May  7 11:20:44 2026
+| Host         : LAPTOP-NFJJRFGE running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file lift_fpga_top_control_sets_placed.rpt
+| Design       : lift_fpga_top
+| Device       : xc7a35t
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    12 |
+|    Minimum number of control sets                        |    12 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    43 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    12 |
+| >= 0 to < 4        |     3 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     3 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     1 |
+| >= 16              |     3 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              30 |           10 |
+| No           | No                    | Yes                    |              70 |           28 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |              15 |            6 |
+| Yes          | No                    | Yes                    |              41 |           14 |
+| Yes          | Yes                   | No                     |               1 |            1 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++-----------------------+----------------------+------------------+------------------+----------------+--------------+
+|      Clock Signal     |     Enable Signal    | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++-----------------------+----------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG        | btnU_IBUF            | btnC_IBUF        |                1 |              1 |         1.00 |
+|  disp_clk             |                      | btnC_IBUF        |                1 |              2 |         2.00 |
+|  clk_div_reg_BUFG[26] |                      |                  |                3 |              3 |         1.00 |
+|  disp_clk             | seg[6]_i_1_n_0       |                  |                4 |              7 |         1.75 |
+|  clk_IBUF_BUFG        | UART/E[0]            | btnC_IBUF        |                5 |              8 |         1.60 |
+|  clk_IBUF_BUFG        | UART/tx_shift[0]     | btnC_IBUF        |                2 |              8 |         4.00 |
+|  disp_clk             | mux_state[1]_i_1_n_0 |                  |                2 |              8 |         4.00 |
+|  disp_clk             | rst_cnt[0]           | btnC_IBUF        |                3 |             10 |         3.33 |
+|  clk_IBUF_BUFG        | UART/state[2]        | btnC_IBUF        |                4 |             15 |         3.75 |
+|  clk_IBUF_BUFG        |                      |                  |                7 |             27 |         3.86 |
+|  clk_div_reg_BUFG[26] |                      | btnC_IBUF        |               17 |             33 |         1.94 |
+|  clk_IBUF_BUFG        |                      | btnC_IBUF        |               10 |             35 |         3.50 |
++-----------------------+----------------------+------------------+------------------+----------------+--------------+
+
+
