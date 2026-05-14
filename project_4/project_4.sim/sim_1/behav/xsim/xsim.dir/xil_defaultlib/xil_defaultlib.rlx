@@ -1,0 +1,10 @@
+0.7
+2020.2
+Nov 14 2025
+19:37:27
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.sim/sim_1/behav/xsim/glbl.v,1756381829,verilog,,,,glbl,,,,,,,,
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/Lift8.v,1777962824,verilog,,D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/Lift_fpga_top.v,,Lift8,,,../../../../../../../../Xilinx/2025.2/Vivado/data/rsb/busdef,,,,,
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/Lift_fpga_top.v,1778132611,verilog,,D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/uart_tx.v,,lift_fpga_top,,,../../../../../../../../Xilinx/2025.2/Vivado/data/rsb/busdef,,,,,
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/floor_logic.v,1777962824,verilog,,D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/request_logic.v,,floor_logic,,,../../../../../../../../Xilinx/2025.2/Vivado/data/rsb/busdef,,,,,
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/request_logic.v,1777962824,verilog,,D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/Lift8.v,,request_logic,,,../../../../../../../../Xilinx/2025.2/Vivado/data/rsb/busdef,,,,,
+D:/VIVADO/Elevator Controller/project_4/project_4/project_4.srcs/sources_1/new/uart_tx.v,1778132565,verilog,,,,uart_tx,,,../../../../../../../../Xilinx/2025.2/Vivado/data/rsb/busdef,,,,,

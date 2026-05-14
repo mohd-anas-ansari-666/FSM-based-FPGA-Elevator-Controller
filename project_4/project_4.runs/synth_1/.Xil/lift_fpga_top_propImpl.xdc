@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:D:/VIVADO/project_4/project_4/project_4.srcs/constrs_1/new/lift_basys3.xdc rfile:../../../project_4.srcs/constrs_1/new/lift_basys3.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:{C:/Users/HP/Desktop/MajorProject/V2/Elevator Controller/project_4/project_4.srcs/constrs_1/new/lift_basys3.xdc} rfile:../../../project_4.srcs/constrs_1/new/lift_basys3.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:2 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN W5 [get_ports clk]
 set_property src_info {type:XDC file:1 line:9 export:INPUT save:INPUT read:READ} [current_design]

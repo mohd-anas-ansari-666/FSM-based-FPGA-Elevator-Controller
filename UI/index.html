@@ -34,7 +34,7 @@ body{
 
 /* ── Header ── */
 header{
-  width:100%;max-width:960px;
+  width:100%;max-width:1100px;
   display:flex;justify-content:space-between;align-items:center;
   border-bottom:1px solid var(--steel);
   padding-bottom:14px;margin-bottom:22px;
@@ -43,7 +43,7 @@ header h1{
   font-family:'Orbitron',sans-serif;
   font-size:1rem;letter-spacing:.3em;color:var(--accent);
 }
-header h1 span{color:var(--dim);}
+header h1 span{color:#6878a0;}
 .badge{
   font-size:.65rem;letter-spacing:.12em;
   padding:4px 12px;border-radius:20px;
@@ -53,17 +53,26 @@ header h1 span{color:var(--dim);}
 .badge.ok {border-color:var(--green);color:var(--green);background:rgba(32,224,128,.07);}
 .badge.err{border-color:var(--red);  color:var(--red);  background:rgba(255,48,48,.07);}
 
+/* PM badge in header */
+.pm-badge{
+  font-size:.55rem;letter-spacing:.1em;
+  padding:4px 10px;border-radius:20px;
+  border:1px solid #604010;color:var(--accent);
+  background:rgba(232,160,32,.07);
+  font-family:'Orbitron',sans-serif;
+}
+
 /* ── Layout ── */
 .layout{
   display:flex;gap:28px;align-items:flex-start;
-  width:100%;max-width:960px;
+  width:100%;max-width:1100px;
 }
 
 /* ══════════════════════════
    SHAFT
 ══════════════════════════ */
 .shaft-col{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.shaft-lbl{font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.3em;color:var(--dim);}
+.shaft-lbl{font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.3em;color:#a0b0c8;}
 
 .shaft-outer{position:relative;}
 
@@ -151,7 +160,7 @@ header h1 span{color:var(--dim);}
 }
 .fl-lbl{
   flex:1;display:flex;align-items:center;padding-left:5px;
-  font-size:.6rem;color:var(--dim);letter-spacing:.08em;
+  font-size:.6rem;color:#8090a8;letter-spacing:.08em;
   transition:color .3s;
 }
 .fl-lbl.here{color:var(--accent);}
@@ -171,7 +180,7 @@ header h1 span{color:var(--dim);}
   border:2px solid var(--steel2);
   background:radial-gradient(circle at 35% 30%,#232d3e,#111820);
   display:flex;align-items:center;justify-content:center;
-  font-size:8px;font-weight:700;color:var(--dim);
+  font-size:8px;font-weight:700;color:#ffffff;
   cursor:default;
   box-shadow:0 2px 5px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
   transition:all .2s;
@@ -202,7 +211,7 @@ header h1 span{color:var(--dim);}
 }
 .card-title{
   font-family:'Orbitron',sans-serif;font-size:.55rem;
-  letter-spacing:.3em;color:var(--dim);
+  letter-spacing:.3em;color:#b0c0d8;
   text-transform:uppercase;
   margin-bottom:12px;padding-bottom:10px;
   border-bottom:1px solid var(--steel);
@@ -211,7 +220,7 @@ header h1 span{color:var(--dim);}
 /* Status grid */
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .stat{background:var(--steel);border-radius:5px;padding:9px 12px;}
-.stat-lbl{font-size:.5rem;letter-spacing:.18em;color:var(--dim);margin-bottom:3px;}
+.stat-lbl{font-size:.5rem;letter-spacing:.18em;color:#8898b0;margin-bottom:3px;}
 .stat-val{
   font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:700;
   color:var(--text);transition:color .3s;
@@ -222,7 +231,7 @@ header h1 span{color:var(--dim);}
 
 /* Direction arrows */
 .dir-row{display:flex;align-items:center;justify-content:center;gap:18px;padding:10px 0 2px;}
-.darrow{font-size:1.5rem;color:var(--dim);transition:all .3s;}
+.darrow{font-size:1.5rem;color:#607088;transition:all .3s;}
 .darrow.aup  {color:var(--green);text-shadow:0 0 10px var(--green);}
 .darrow.adown{color:var(--blue); text-shadow:0 0 10px var(--blue);}
 
@@ -255,7 +264,7 @@ header h1 span{color:var(--dim);}
   background:radial-gradient(circle at 35% 30%,#28344a,#141e2c);
   display:flex;align-items:center;justify-content:center;
   font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;
-  color:var(--dim);cursor:default;
+  color:#ffffff;cursor:default;
   box-shadow:0 2px 6px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
   position:relative;transition:all .2s;
 }
@@ -276,19 +285,19 @@ header h1 span{color:var(--dim);}
 .hall-table{width:100%;border-collapse:collapse;font-size:.7rem;}
 .hall-table th{
   font-family:'Orbitron',sans-serif;font-size:.5rem;
-  letter-spacing:.15em;color:var(--dim);
+  letter-spacing:.15em;color:#9aabbf;
   padding:4px 8px;text-align:left;
   border-bottom:1px solid var(--steel);
 }
 .hall-table td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.03);}
-.hall-table .fl-col{color:var(--dim);width:50px;}
+.hall-table .fl-col{color:#9aabbf;width:50px;}
 
 .hbtn-lg{
   display:inline-flex;align-items:center;justify-content:center;
   width:32px;height:32px;border-radius:50%;
   border:2px solid var(--steel2);
   background:radial-gradient(circle at 35% 30%,#232d3e,#111820);
-  font-size:.6rem;font-weight:700;color:var(--dim);
+  font-size:.6rem;font-weight:700;color:#ffffff;
   box-shadow:0 2px 5px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
   transition:all .2s;position:relative;
 }
@@ -307,15 +316,116 @@ header h1 span{color:var(--dim);}
 .na-cell{color:var(--dim);opacity:.35;font-size:.6rem;padding-left:8px;}
 
 /* Note */
-.note{margin-top:18px;font-size:.6rem;color:var(--dim);text-align:center;line-height:1.9;}
+.note{margin-top:18px;font-size:.6rem;color:#7080a0;text-align:center;line-height:1.9;}
 .note span{color:var(--accent);}
+
+/* ══════════════════════════════════════════════════
+   PREDICTIVE MAINTENANCE STYLES
+══════════════════════════════════════════════════ */
+
+/* Health score panel */
+.health-panel{
+  background:var(--panel);border:1px solid var(--steel);border-radius:8px;
+  padding:16px 18px;
+}
+.health-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.health-score-number{
+  font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;
+  transition:color .5s;
+}
+.health-status-pill{
+  font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.2em;
+  padding:4px 12px;border-radius:20px;border:1px solid;
+  transition:all .4s;
+}
+/* Status colour states — toggled by JS */
+.hs-excellent .health-score-number,.hs-excellent .health-status-pill{color:var(--green);}
+.hs-excellent .health-status-pill{border-color:var(--green);background:rgba(32,224,128,.08);}
+.hs-good .health-score-number,.hs-good .health-status-pill{color:#60d0a0;}
+.hs-good .health-status-pill{border-color:#60d0a0;background:rgba(96,208,160,.08);}
+.hs-warning .health-score-number,.hs-warning .health-status-pill{color:var(--accent);}
+.hs-warning .health-status-pill{border-color:var(--accent);background:rgba(232,160,32,.08);}
+.hs-critical .health-score-number,.hs-critical .health-status-pill{color:var(--red);}
+.hs-critical .health-status-pill{border-color:var(--red);background:rgba(255,48,48,.08);}
+@keyframes critpulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hs-critical .health-score-number{animation:critpulse .8s infinite;}
+
+/* Health progress bar */
+.health-bar-track{
+  width:100%;height:6px;border-radius:3px;
+  background:var(--steel);margin-bottom:8px;overflow:hidden;
+}
+.health-bar-fill{
+  height:100%;border-radius:3px;
+  transition:width .8s cubic-bezier(.4,0,.2,1), background .5s;
+}
+
+/* PM Stats grid */
+.pm-stat-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+}
+.pm-stat{
+  background:var(--steel);border-radius:5px;padding:7px 10px;
+}
+.pm-stat-lbl{font-size:.45rem;letter-spacing:.15em;color:#7080a0;margin-bottom:2px;}
+.pm-stat-val{
+  font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;
+  color:var(--text);
+}
+.pm-stat-val.warn{color:var(--accent);}
+.pm-stat-val.stop{color:var(--red);}
+
+/* Recommendation panel */
+.recommendation-text{
+  font-size:.65rem;line-height:1.7;color:#a0b8c8;
+  padding:10px 12px;
+  background:rgba(255,255,255,.02);
+  border-radius:5px;border-left:3px solid var(--accent);
+}
+.recommendation-text.crit{border-left-color:var(--red);color:#e0a0a0;}
+.recommendation-text.warn{border-left-color:var(--accent);color:#e0c080;}
+.recommendation-text.ok  {border-left-color:var(--green);color:#80c0a0;}
+
+/* Active alerts panel */
+.alerts-list{display:flex;flex-direction:column;gap:5px;}
+.alert-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:5px;
+  font-size:.6rem;letter-spacing:.05em;
+  background:rgba(255,48,48,.08);border:1px solid rgba(255,48,48,.25);
+  color:#ff8080;
+}
+@keyframes alertblink{0%,100%{opacity:1}50%{opacity:.5}}
+.alert-item{animation:alertblink 1s infinite;}
+.alert-dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;}
+.alerts-empty{font-size:.6rem;color:#50607a;padding:6px 0;}
+
+/* Maintenance log panel */
+.log-scroll{
+  max-height:160px;overflow-y:auto;
+  font-size:.6rem;line-height:1.7;
+  scrollbar-width:thin;scrollbar-color:#2a3344 transparent;
+}
+.log-scroll::-webkit-scrollbar{width:4px;}
+.log-scroll::-webkit-scrollbar-track{background:transparent;}
+.log-scroll::-webkit-scrollbar-thumb{background:#2a3344;border-radius:2px;}
+.log-entry{display:flex;gap:6px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.02);}
+.log-ts{color:#4a5a70;flex-shrink:0;}
+.log-level-INFO    {color:#4a8aaa;}
+.log-level-WARNING {color:var(--accent);}
+.log-level-CRITICAL{color:var(--red);}
+.log-msg{color:#9aabbf;}
 </style>
 </head>
 <body>
 
 <header>
   <h1>LIFT<span> // </span>MONITOR</h1>
-  <div class="badge" id="badge">⬤ DISCONNECTED</div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <div class="pm-badge">⚙ PRED-MAINT</div>
+    <a href="analytics.html" target="_blank" style="font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.1em;padding:5px 14px;border-radius:6px;border:1px solid var(--blue);background:rgba(32,144,255,.08);color:var(--blue);cursor:pointer;text-decoration:none;transition:all .2s;">📊 Analytics</a>
+    <div class="badge" id="badge">⬤ DISCONNECTED</div>
+  </div>
 </header>
 
 <div class="layout">
@@ -358,22 +468,59 @@ header h1 span{color:var(--dim);}
       </div>
       <div class="dir-row">
         <div class="darrow" id="aUp">▲</div>
-        <div style="font-family:'Orbitron',sans-serif;font-size:.55rem;color:var(--dim);letter-spacing:.2em;">TRAVEL</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:.55rem;color:#7080a0;letter-spacing:.2em;">TRAVEL</div>
         <div class="darrow" id="aDown">▼</div>
       </div>
       <div class="emerg-banner" id="emergBanner">⚠ EMERGENCY STOP ACTIVE</div>
       <div class="emerg-travel" id="emergTravel">Travelling to nearest floor…</div>
     </div>
 
+    <!-- ══ HEALTH SCORE PANEL ══ -->
+    <div class="card health-panel" id="healthCard">
+      <div class="card-title">System Health &nbsp;<span style="color:#5a6a80;font-size:.45rem;">PREDICTIVE MAINTENANCE</span></div>
+      <div class="health-top" id="healthTop">
+        <div class="health-score-number" id="healthScore">100</div>
+        <div class="health-status-pill" id="healthStatus">EXCELLENT</div>
+      </div>
+      <div class="health-bar-track">
+        <div class="health-bar-fill" id="healthBarFill" style="width:100%;background:var(--green);"></div>
+      </div>
+      <!-- PM counters sub-grid -->
+      <div class="pm-stat-grid" style="margin-top:8px;">
+        <div class="pm-stat"><div class="pm-stat-lbl">Door Cycles</div><div class="pm-stat-val" id="pmDoorCycles">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Move Cycles</div><div class="pm-stat-val" id="pmMoveCycles">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Reversals</div><div class="pm-stat-val" id="pmReversals">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Emergency</div><div class="pm-stat-val" id="pmEmerg">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">UART Fails</div><div class="pm-stat-val" id="pmUartFail">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Invalid FSM</div><div class="pm-stat-val" id="pmInvalid">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Stuck Events</div><div class="pm-stat-val" id="pmStuck">0</div></div>
+        <div class="pm-stat"><div class="pm-stat-lbl">Uptime (s)</div><div class="pm-stat-val" id="pmUptime">0</div></div>
+      </div>
+    </div>
+
+    <!-- ══ ACTIVE ALERTS ══ -->
+    <div class="card" id="alertsCard">
+      <div class="card-title">Active Alerts</div>
+      <div class="alerts-list" id="alertsList">
+        <div class="alerts-empty">No active alerts</div>
+      </div>
+    </div>
+
+    <!-- ══ RECOMMENDATION ══ -->
+    <div class="card">
+      <div class="card-title">Maintenance Recommendation</div>
+      <div class="recommendation-text ok" id="recommendationText">System operating normally. Continue routine monitoring.</div>
+    </div>
+
     <!-- Cabin buttons -->
     <div class="card">
-      <div class="card-title">Cabin Buttons &nbsp;<span style="color:var(--dim);font-size:.5rem;">(SW 0–4)</span></div>
+      <div class="card-title">Cabin Buttons &nbsp;<span style="color:#7080a0;font-size:.5rem;">(SW 0–4)</span></div>
       <div class="cabin-grid" id="cabinGrid"></div>
     </div>
 
     <!-- Hall buttons table -->
     <div class="card">
-      <div class="card-title">Hall Buttons &nbsp;<span style="color:var(--dim);font-size:.5rem;">(SW 5–12)</span></div>
+      <div class="card-title">Hall Buttons &nbsp;<span style="color:#7080a0;font-size:.5rem;">(SW 5–12)</span></div>
       <table class="hall-table">
         <thead>
           <tr>
@@ -384,6 +531,14 @@ header h1 span{color:var(--dim);}
         </thead>
         <tbody id="hallTable"></tbody>
       </table>
+    </div>
+
+    <!-- ══ MAINTENANCE LOG ══ -->
+    <div class="card">
+      <div class="card-title">Maintenance Log &nbsp;<span style="color:#5a6a80;font-size:.45rem;">LAST 20 EVENTS</span></div>
+      <div class="log-scroll" id="maintenanceLog">
+        <div style="color:#4a5a70;font-size:.6rem;padding:4px 0;">Awaiting data…</div>
+      </div>
     </div>
 
   </div>
@@ -398,8 +553,8 @@ header h1 span{color:var(--dim);}
 // ═══════════════════════════════════════════════
 //  Constants
 // ═══════════════════════════════════════════════
-const NUM_FLOORS = 5;      // 0–4
-const SHAFT_H    = 420;    // px
+const NUM_FLOORS = 5;
+const SHAFT_H    = 420;
 const FLOOR_H    = SHAFT_H / NUM_FLOORS;
 const CABIN_H    = FLOOR_H - 8;
 const WS_URL     = 'ws://localhost:8765';
@@ -412,7 +567,6 @@ const cabin  = document.getElementById('cabin');
 shaft.style.height = SHAFT_H + 'px';
 cabin.style.height = CABIN_H + 'px';
 
-// Floor dividers
 for (let i = 1; i < NUM_FLOORS; i++) {
   const l = document.createElement('div');
   l.className = 'fl-line';
@@ -420,7 +574,6 @@ for (let i = 1; i < NUM_FLOORS; i++) {
   shaft.appendChild(l);
 }
 
-// Floor labels (right)
 const flLabels = document.getElementById('flLabels');
 for (let i = 0; i < NUM_FLOORS; i++) {
   const d = document.createElement('div');
@@ -432,10 +585,6 @@ for (let i = 0; i < NUM_FLOORS; i++) {
 
 // ═══════════════════════════════════════════════
 //  Build hall buttons column (left of shaft)
-//  Each floor row: [UP btn] [DOWN btn]  (where applicable)
-//  Floor 0: UP only (no down from ground)
-//  Floor 4: DOWN only (no up from top)
-//  Floors 1-3: both
 // ═══════════════════════════════════════════════
 const hallCol = document.getElementById('hallCol');
 hallCol.style.height = SHAFT_H + 'px';
@@ -445,24 +594,18 @@ for (let i = 0; i < NUM_FLOORS; i++) {
   row.className = 'hall-floor';
   row.style.height = FLOOR_H + 'px';
 
-  // UP button: floors 0-3 (sw[8:5] → hall_up[0..3] = floors 0..3)
   if (i < 4) {
     const ub = document.createElement('div');
     ub.className = 'hbtn'; ub.id = 'su_' + i;
-    ub.textContent = '▲';
-    ub.title = 'Hall UP F' + i;
+    ub.textContent = '▲'; ub.title = 'Hall UP F' + i;
     row.appendChild(ub);
   }
-
-  // DOWN button: floors 1-4 (sw[12:9] → hall_down[0..3] = floors 1..4)
   if (i > 0) {
     const db = document.createElement('div');
     db.className = 'hbtn'; db.id = 'sd_' + i;
-    db.textContent = '▼';
-    db.title = 'Hall DOWN F' + i;
+    db.textContent = '▼'; db.title = 'Hall DOWN F' + i;
     row.appendChild(db);
   }
-
   hallCol.appendChild(row);
 }
 
@@ -483,7 +626,6 @@ for (let i = 0; i < NUM_FLOORS; i++) {
 const hallTable = document.getElementById('hallTable');
 for (let i = 0; i < NUM_FLOORS; i++) {
   const tr = document.createElement('tr');
-
   const tdF = document.createElement('td');
   tdF.className = 'fl-col'; tdF.textContent = 'Floor ' + i;
 
@@ -492,74 +634,254 @@ for (let i = 0; i < NUM_FLOORS; i++) {
     const b = document.createElement('div');
     b.className = 'hbtn-lg'; b.id = 'tu_' + i; b.textContent = '▲';
     tdU.appendChild(b);
-  } else {
-    tdU.innerHTML = '<span class="na-cell">—</span>';
-  }
+  } else { tdU.innerHTML = '<span class="na-cell">—</span>'; }
 
   const tdD = document.createElement('td');
   if (i > 0) {
     const b = document.createElement('div');
     b.className = 'hbtn-lg'; b.id = 'td_' + i; b.textContent = '▼';
     tdD.appendChild(b);
-  } else {
-    tdD.innerHTML = '<span class="na-cell">—</span>';
-  }
+  } else { tdD.innerHTML = '<span class="na-cell">—</span>'; }
 
   tr.appendChild(tdF); tr.appendChild(tdU); tr.appendChild(tdD);
   hallTable.appendChild(tr);
 }
 
 // ═══════════════════════════════════════════════
-//  Alarm sound (Web Audio API — no external file)
+//  Pending request state
 // ═══════════════════════════════════════════════
-let audioCtx = null;
-let alarmNodes = [];
-let alarmRunning = false;
+const pending = {
+  cabin:     Array(NUM_FLOORS).fill(false),
+  hall_up:   Array(4).fill(false),
+  hall_down: Array(4).fill(false),
+};
+
+function updatePending(s) {
+  for (let i = 0; i < NUM_FLOORS; i++)
+    if (s.cabin_req && s.cabin_req[i]) pending.cabin[i] = true;
+
+  for (let i = 0; i < 4; i++) {
+    if (s.hall_up   && s.hall_up[i])   pending.hall_up[i]   = true;
+    if (s.hall_down && s.hall_down[i]) pending.hall_down[i] = true;
+  }
+
+  if (s.door) {
+    const f = s.floor;
+    if (f < NUM_FLOORS) pending.cabin[f] = false;
+    if (f < 4)          pending.hall_up[f] = false;
+    if (f >= 1 && f <= 4) pending.hall_down[f - 1] = false;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  Alarm sound (Web Audio API — extended)
+// ═══════════════════════════════════════════════
+let audioCtx      = null;
+let alarmRunning  = false;
+let pmAlarmActive = false;   // separate flag for PM-triggered alarms
 
 function getAudioCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
 }
 
+// Original emergency alarm (two-tone 880/660)
 function startAlarm() {
   if (alarmRunning) return;
   alarmRunning = true;
   const ctx = getAudioCtx();
-
   function beep() {
     if (!alarmRunning) return;
     const osc  = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain); gain.connect(ctx.destination);
     osc.type = 'square';
-
     const t = ctx.currentTime;
-    // Two-tone alarm: 880 Hz → 660 Hz alternating
     osc.frequency.setValueAtTime(880, t);
     osc.frequency.setValueAtTime(660, t + 0.25);
     gain.gain.setValueAtTime(0.18, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-
-    osc.start(t);
-    osc.stop(t + 0.5);
+    osc.start(t); osc.stop(t + 0.5);
     osc.onended = () => { if (alarmRunning) setTimeout(beep, 150); };
   }
-
   beep();
 }
 
-function stopAlarm() {
-  alarmRunning = false;
+function stopAlarm() { alarmRunning = false; }
+
+// PM critical alarm (lower-pitched, distinct from emergency alarm)
+function startPMAlarm() {
+  if (pmAlarmActive) return;
+  pmAlarmActive = true;
+  const ctx = getAudioCtx();
+  function beep() {
+    if (!pmAlarmActive) return;
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sawtooth';
+    const t = ctx.currentTime;
+    osc.frequency.setValueAtTime(440, t);
+    osc.frequency.setValueAtTime(330, t + 0.3);
+    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+    osc.start(t); osc.stop(t + 0.6);
+    osc.onended = () => { if (pmAlarmActive) setTimeout(beep, 400); };
+  }
+  beep();
+}
+
+function stopPMAlarm() { pmAlarmActive = false; }
+
+// ═══════════════════════════════════════════════
+//  Predictive Maintenance UI Updater
+// ═══════════════════════════════════════════════
+
+let prevHealthStatus = 'EXCELLENT';
+
+function renderHealthPanel(packet) {
+  const h = packet.health;
+  if (!h) return;
+
+  // Score number + bar
+  const scoreEl = document.getElementById('healthScore');
+  const barEl   = document.getElementById('healthBarFill');
+  const statEl  = document.getElementById('healthStatus');
+  const cardEl  = document.getElementById('healthCard');
+  const topEl   = document.getElementById('healthTop');
+
+  scoreEl.textContent = Math.round(h.score);
+  statEl.textContent  = h.status;
+
+  // Bar fill + colour
+  const pct = Math.max(0, Math.min(100, h.score));
+  barEl.style.width = pct + '%';
+
+  // Remove all status classes, apply correct one
+  ['hs-excellent','hs-good','hs-warning','hs-critical'].forEach(c =>
+    topEl.classList.remove(c));
+  const cls = {
+    'EXCELLENT': 'hs-excellent',
+    'GOOD':      'hs-good',
+    'WARNING':   'hs-warning',
+    'CRITICAL':  'hs-critical',
+  }[h.status] || 'hs-excellent';
+  topEl.classList.add(cls);
+
+  const barColor = {
+    'EXCELLENT': 'var(--green)',
+    'GOOD':      '#60d0a0',
+    'WARNING':   'var(--accent)',
+    'CRITICAL':  'var(--red)',
+  }[h.status] || 'var(--green)';
+  barEl.style.background = barColor;
+
+  // Trigger PM alarm on CRITICAL health
+  if (h.status === 'CRITICAL' && prevHealthStatus !== 'CRITICAL') {
+    startPMAlarm();
+  } else if (h.status !== 'CRITICAL') {
+    stopPMAlarm();
+  }
+  prevHealthStatus = h.status;
+}
+
+function renderPMStats(packet) {
+  const st = packet.stats;
+  if (!st) return;
+
+  function setVal(id, val, warnThreshold, critThreshold) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = val;
+    el.className = 'pm-stat-val';
+    if (critThreshold !== undefined && val >= critThreshold) el.classList.add('stop');
+    else if (warnThreshold !== undefined && val >= warnThreshold) el.classList.add('warn');
+  }
+
+  setVal('pmDoorCycles',  st.door_cycles,        200, 500);
+  setVal('pmMoveCycles',  st.movement_cycles,     400, 1000);
+  setVal('pmReversals',   st.direction_reversals, 20,  50);
+  setVal('pmEmerg',       st.emergency_count,     1,   3);
+  setVal('pmUartFail',    st.uart_failures,       1,   3);
+  setVal('pmInvalid',     st.invalid_state_count, 1,   5);
+  setVal('pmStuck',       st.stuck_events,        1,   2);
+  setVal('pmUptime',      st.uptime_seconds);
+}
+
+function renderAlerts(packet) {
+  const alerts = packet.active_alerts || [];
+  const listEl = document.getElementById('alertsList');
+  listEl.innerHTML = '';
+
+  if (alerts.length === 0) {
+    listEl.innerHTML = '<div class="alerts-empty">No active alerts</div>';
+    // Stop PM alarm if it was from alerts and health is not critical
+    if (prevHealthStatus !== 'CRITICAL') stopPMAlarm();
+    return;
+  }
+
+  alerts.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'alert-item';
+    div.innerHTML = `<div class="alert-dot"></div>${a}`;
+    listEl.appendChild(div);
+  });
+
+  // Trigger alarm for critical alert types (avoid spam — pmAlarmActive guards it)
+  const criticalAlerts = ['STUCK', 'UART DISCONNECTED', 'EMERGENCY', 'FAULT'];
+  if (alerts.some(a => criticalAlerts.some(c => a.includes(c)))) {
+    startPMAlarm();
+  }
+}
+
+function renderRecommendation(packet) {
+  const rec = packet.recommendation;
+  if (!rec) return;
+  const el = document.getElementById('recommendationText');
+  el.textContent = rec;
+  el.className = 'recommendation-text';
+  if (rec.includes('CRITICAL')) el.classList.add('crit');
+  else if (rec.includes('WARNING') || rec.includes('⚠')) el.classList.add('warn');
+  else el.classList.add('ok');
+}
+
+// Track last log count to avoid full re-render every frame
+let lastLogCount = 0;
+
+function renderMaintenanceLog(packet) {
+  const logs = packet.maintenance_log || [];
+  if (logs.length === lastLogCount) return;  // nothing new
+  lastLogCount = logs.length;
+
+  const container = document.getElementById('maintenanceLog');
+  container.innerHTML = '';
+
+  if (logs.length === 0) {
+    container.innerHTML = '<div style="color:#4a5a70;font-size:.6rem;padding:4px 0;">No events yet</div>';
+    return;
+  }
+
+  // Newest first
+  [...logs].reverse().forEach(entry => {
+    const row = document.createElement('div');
+    row.className = 'log-entry';
+    row.innerHTML =
+      `<span class="log-ts">${entry.timestamp}</span>` +
+      `<span class="log-level-${entry.level}">[${entry.level}]</span>` +
+      `<span class="log-msg">${entry.message}</span>`;
+    container.appendChild(row);
+  });
+
+  // Auto-scroll to top (newest)
+  container.scrollTop = 0;
 }
 
 // ═══════════════════════════════════════════════
-//  Render
+//  Render  (existing elevator visualization)
 // ═══════════════════════════════════════════════
 let prevEmerg = false;
 
-function floorTop(f) {
-  return SHAFT_H - (f + 1) * FLOOR_H + 4;
-}
+function floorTop(f) { return SHAFT_H - (f + 1) * FLOOR_H + 4; }
 
 function setLit(id, on) {
   const el = document.getElementById(id);
@@ -569,18 +891,22 @@ function setLit(id, on) {
 }
 
 function render(s) {
-  // ── Cabin position ─────────────────────────
+  updatePending(s);
+
+  // ── Cabin position ──────────────────────────
   cabin.style.top = floorTop(s.floor) + 'px';
 
-  // ── Door ───────────────────────────────────
+  // ── Door ────────────────────────────────────
   if (s.door) cabin.classList.add('open');
   else        cabin.classList.remove('open');
 
-  // ── Emergency ──────────────────────────────
+  // ── Emergency ───────────────────────────────
   if (s.emergency) {
+    pending.cabin.fill(false);
+    pending.hall_up.fill(false);
+    pending.hall_down.fill(false);
     cabin.classList.add('emerg');
     document.getElementById('emergBanner').classList.add('on');
-    // Show "travelling to nearest floor" only while still moving
     const moving = !s.idle && !s.door;
     const et = document.getElementById('emergTravel');
     if (moving) et.classList.add('on'); else et.classList.remove('on');
@@ -593,20 +919,20 @@ function render(s) {
   }
   prevEmerg = s.emergency;
 
-  // ── Direction arrow on cabin ───────────────
+  // ── Direction arrow on cabin ─────────────────
   const dir = document.getElementById('cabinDir');
   cabin.classList.remove('go-up','go-down');
   if (s.up && !s.down)      { dir.textContent='▲'; cabin.classList.add('go-up');   }
   else if (s.down && !s.up) { dir.textContent='▼'; cabin.classList.add('go-down'); }
 
-  // ── Floor labels ───────────────────────────
+  // ── Floor labels ─────────────────────────────
   document.getElementById('flReadout').textContent = 'FL ' + s.floor;
   for (let i = 0; i < NUM_FLOORS; i++) {
     const el = document.getElementById('fll' + i);
     if (el) { if (i === s.floor) el.classList.add('here'); else el.classList.remove('here'); }
   }
 
-  // ── Status panel ───────────────────────────
+  // ── Status panel ─────────────────────────────
   document.getElementById('sFloor').textContent = s.floor;
 
   const sDir = document.getElementById('sDir');
@@ -622,33 +948,49 @@ function render(s) {
   document.getElementById('aUp').className   = 'darrow' + (s.up&&!s.down ? ' aup'   : '');
   document.getElementById('aDown').className = 'darrow' + (s.down&&!s.up ? ' adown' : '');
 
-  // ── Cabin buttons ──────────────────────────
-  for (let i = 0; i < NUM_FLOORS; i++) setLit('cb_' + i, s.cabin_req && s.cabin_req[i]);
+  // ── Cabin buttons ────────────────────────────
+  for (let i = 0; i < NUM_FLOORS; i++) setLit('cb_' + i, pending.cabin[i]);
 
-  // ── Hall UP buttons ────────────────────────
-  // hall_up[i] = floor i  (i = 0..3)
+  // ── Hall UP buttons ──────────────────────────
   for (let i = 0; i < 4; i++) {
-    const on = s.hall_up && s.hall_up[i];
-    setLit('su_' + i, on);   // shaft sidebar
-    setLit('tu_' + i, on);   // table panel
+    setLit('su_' + i, pending.hall_up[i]);
+    setLit('tu_' + i, pending.hall_up[i]);
   }
 
-  // ── Hall DOWN buttons ──────────────────────
-  // hall_down[i] = floor (i+1)  because sw9=floor1...sw12=floor4
+  // ── Hall DOWN buttons ────────────────────────
   for (let i = 0; i < 4; i++) {
     const floor = i + 1;
-    const on = s.hall_down && s.hall_down[i];
-    setLit('sd_' + floor, on);  // shaft sidebar
-    setLit('td_' + floor, on);  // table panel
+    setLit('sd_' + floor, pending.hall_down[i]);
+    setLit('td_' + floor, pending.hall_down[i]);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  Full update — called on every WS message
+// ═══════════════════════════════════════════════
+function handlePacket(packet) {
+  // Backward-compat: extract state fields (also top-level in packet)
+  const s = packet.state || packet;
+
+  // Existing elevator render
+  render(s);
+
+  // Predictive maintenance panels (only when real data present)
+  if (packet.health) {
+    renderHealthPanel(packet);
+    renderPMStats(packet);
+    renderAlerts(packet);
+    renderRecommendation(packet);
+    renderMaintenanceLog(packet);
   }
 }
 
 // ═══════════════════════════════════════════════
 //  Demo mode (runs when no WS connection)
 // ═══════════════════════════════════════════════
-let demoTimer  = null;
-let demoFloor  = 0;
-let demoDir    = 1;
+let demoTimer     = null;
+let demoFloor     = 0;
+let demoDir       = 1;
 let demoDoorTimer = 0;
 
 const demoState = {
@@ -698,7 +1040,7 @@ function connect() {
     stopDemo();
   };
   ws.onmessage = ev => {
-    try { render(JSON.parse(ev.data)); } catch(e) {}
+    try { handlePacket(JSON.parse(ev.data)); } catch(e) {}
   };
   ws.onclose = () => {
     badge.className = 'badge err'; badge.textContent = '⬤ DISCONNECTED';

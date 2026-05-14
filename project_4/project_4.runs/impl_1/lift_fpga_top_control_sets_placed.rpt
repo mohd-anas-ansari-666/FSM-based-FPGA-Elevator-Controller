@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Thu May  7 11:20:44 2026
-| Host         : LAPTOP-NFJJRFGE running 64-bit major release  (build 9200)
+| Date         : Tue May 12 11:44:49 2026
+| Host         : DESKTOP-8IBININ running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file lift_fpga_top_control_sets_placed.rpt
 | Design       : lift_fpga_top
 | Device       : xc7a35t
@@ -77,8 +77,8 @@ Table of Contents
 |  disp_clk             |                      | btnC_IBUF        |                1 |              2 |         2.00 |
 |  clk_div_reg_BUFG[26] |                      |                  |                3 |              3 |         1.00 |
 |  disp_clk             | seg[6]_i_1_n_0       |                  |                4 |              7 |         1.75 |
-|  clk_IBUF_BUFG        | UART/E[0]            | btnC_IBUF        |                5 |              8 |         1.60 |
 |  clk_IBUF_BUFG        | UART/tx_shift[0]     | btnC_IBUF        |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG        | UART/E[0]            | btnC_IBUF        |                5 |              8 |         1.60 |
 |  disp_clk             | mux_state[1]_i_1_n_0 |                  |                2 |              8 |         4.00 |
 |  disp_clk             | rst_cnt[0]           | btnC_IBUF        |                3 |             10 |         3.33 |
 |  clk_IBUF_BUFG        | UART/state[2]        | btnC_IBUF        |                4 |             15 |         3.75 |

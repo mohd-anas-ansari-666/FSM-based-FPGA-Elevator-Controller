@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "D:/VIVADO/project_4/project_4/project_4.runs/impl_1/lift_fpga_top.tcl"
+  variable script "C:/Users/HP/Desktop/MajorProject/V2/Elevator Controller/project_4/project_4.runs/impl_1/lift_fpga_top.tcl"
   variable category "vivado_impl"
 }
 
@@ -106,11 +106,10 @@ set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param general.usePosixSpawnForFork 1
-  set_param chipscope.maxJobs 4
-  set_param xicom.use_bs_reader 1
-  set_param runs.launchOptions { -jobs 8  }
+  set_param chipscope.maxJobs 3
+  set_param runs.launchOptions { -jobs 6  }
   open_checkpoint lift_fpga_top_routed.dcp
-  set_property webtalk.parent_dir D:/VIVADO/project_4/project_4/project_4.cache/wt [current_project]
+  set_property webtalk.parent_dir {C:/Users/HP/Desktop/MajorProject/V2/Elevator Controller/project_4/project_4.cache/wt} [current_project]
 set_property TOP lift_fpga_top [current_fileset]
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }

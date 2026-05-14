@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevator Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:      #0a0c10;
+  --panel:   #10141c;
+  --steel:   #1e2430;
+  --steel2:  #2a3344;
+  --accent:  #e8a020;
+  --red:     #ff3030;
+  --green:   #20e080;
+  --blue:    #2090ff;
+  --purple:  #a060ff;
+  --cyan:    #20d0e0;
+  --text:    #c8d0e0;
+  --dim:     #607088;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh;
+  padding: 20px 20px 50px;
+}
+
+/* ── Header ──────────────────────────────────── */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto 28px;
+  border-bottom: 1px solid var(--steel);
+  padding-bottom: 14px;
+}
+header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  letter-spacing: .3em;
+  color: var(--accent);
+}
+header h1 span { color: #6878a0; }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.badge {
+  font-size: .65rem;
+  letter-spacing: .12em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #3a4455;
+  color: #3a4455;
+  transition: all .4s;
+}
+.badge.ok  { border-color: var(--green); color: var(--green); background: rgba(32,224,128,.07); }
+.badge.err { border-color: var(--red);   color: var(--red);   background: rgba(255,48,48,.07); }
+
+.btn-reset {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: .65rem; letter-spacing: .12em;
+  padding: 5px 14px; border-radius: 6px;
+  border: 1px solid var(--steel2);
+  background: var(--panel); color: #9aabbf;
+  cursor: pointer; transition: all .2s;
+}
+.btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-monitor {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: .65rem; letter-spacing: .1em;
+  padding: 5px 14px; border-radius: 6px;
+  border: 1px solid var(--blue);
+  background: rgba(32,144,255,.08);
+  color: var(--blue); cursor: pointer;
+  text-decoration: none; transition: all .2s;
+}
+.btn-monitor:hover { background: rgba(32,144,255,.18); }
+
+/* ── KPI strip ───────────────────────────────── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 1300px;
+  margin: 0 auto 24px;
+}
+.kpi {
+  background: var(--panel);
+  border: 1px solid var(--steel);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--kpi-color, var(--accent));
+}
+.kpi-label { font-size: .5rem; letter-spacing: .2em; color: #8898b0; text-transform: uppercase; margin-bottom: 6px; }
+.kpi-value { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--kpi-color, var(--accent)); }
+.kpi-sub   { font-size: .55rem; color: #6878a0; margin-top: 3px; }
+
+/* ── PM KPI strip ────────────────────────────── */
+.pm-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 1300px;
+  margin: 0 auto 8px;
+}
+.pm-kpi-header {
+  max-width: 1300px;
+  margin: 0 auto 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: .55rem; letter-spacing: .3em;
+  color: #6878a0; text-transform: uppercase;
+  padding-top: 8px;
+  border-top: 1px solid var(--steel);
+}
+
+/* ── Chart grid ──────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 1300px;
+  margin: 0 auto 18px;
+}
+.grid-wide { grid-column: 1 / -1; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--steel);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+.card-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 16px;
+}
+.card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: .6rem; letter-spacing: .25em;
+  color: #b0c0d8; text-transform: uppercase;
+}
+.card-sub   { font-size: .55rem; color: #6878a0; margin-top: 4px; letter-spacing: .05em; }
+.card-badge {
+  font-size: .5rem; letter-spacing: .1em;
+  padding: 3px 8px; border-radius: 4px;
+  border: 1px solid var(--steel2); color: #7080a0;
+}
+
+.chart-wrap    { position: relative; }
+.timeline-wrap { height: 160px; }
+.chart-wrap-md { height: 200px; }
+.chart-wrap-sm { height: 160px; }
+
+/* ── Live indicator dot ──────────────────────── */
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+.live-dot {
+  display: inline-block; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--green);
+  margin-right: 6px; animation: pulse 1.4s infinite;
+}
+
+/* ── Maintenance log styles ───────────────────── */
+.pm-log-scroll {
+  max-height: 200px; overflow-y: auto;
+  font-size: .6rem; line-height: 1.7;
+  scrollbar-width: thin; scrollbar-color: #2a3344 transparent;
+}
+.pm-log-scroll::-webkit-scrollbar { width: 4px; }
+.pm-log-scroll::-webkit-scrollbar-thumb { background: #2a3344; border-radius: 2px; }
+.log-entry { display: flex; gap: 6px; padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,.02); }
+.log-ts { color: #4a5a70; flex-shrink: 0; }
+.log-level-INFO     { color: #4a8aaa; }
+.log-level-WARNING  { color: var(--accent); }
+.log-level-CRITICAL { color: var(--red); }
+.log-msg { color: #9aabbf; }
+
+/* ── Health indicator in KPI ──────────────────── */
+.health-kpi-val { transition: color .5s; }
+
+/* ── Bottom note ─────────────────────────────── */
+.note { max-width: 1300px; margin: 0 auto; font-size: .6rem; color: #6878a0; text-align: center; line-height: 1.9; }
+.note span { color: var(--accent); }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 760px) {
+  .grid { grid-template-columns: 1fr; }
+  .grid-wide { grid-column: 1; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .pm-kpi-strip { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <h1>LIFT<span> // </span>ANALYTICS</h1>
+  <div class="header-right">
+    <a href="index.html" class="btn-monitor">← Live Monitor</a>
+    <button class="btn-reset" onclick="resetAll()">↺ Reset Data</button>
+    <div class="badge" id="badge">⬤ DISCONNECTED</div>
+  </div>
+</header>
+
+<!-- ══ KPI STRIP ══ -->
+<div class="kpi-strip">
+  <div class="kpi" style="--kpi-color: var(--accent);">
+    <div class="kpi-label">Total Requests</div>
+    <div class="kpi-value" id="kTotalReq">0</div>
+    <div class="kpi-sub">since session start</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--green);">
+    <div class="kpi-label">Busiest Floor</div>
+    <div class="kpi-value" id="kBusiest">—</div>
+    <div class="kpi-sub" id="kBusiestSub">no data yet</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--blue);">
+    <div class="kpi-label">Trips UP</div>
+    <div class="kpi-value" id="kTripsUp">0</div>
+    <div class="kpi-sub">direction changes</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--purple);">
+    <div class="kpi-label">Trips DOWN</div>
+    <div class="kpi-value" id="kTripsDown">0</div>
+    <div class="kpi-sub">direction changes</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--cyan);">
+    <div class="kpi-label">Door Events</div>
+    <div class="kpi-value" id="kDoorEvents">0</div>
+    <div class="kpi-sub">total stops made</div>
+  </div>
+</div>
+
+<!-- ══ PM KPI STRIP ══ -->
+<div class="pm-kpi-header">⚙ Predictive Maintenance KPIs</div>
+<div class="pm-kpi-strip">
+  <div class="kpi" style="--kpi-color: var(--green);">
+    <div class="kpi-label">Health Score</div>
+    <div class="kpi-value health-kpi-val" id="kHealthScore">100</div>
+    <div class="kpi-sub" id="kHealthStatus">EXCELLENT</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--red);">
+    <div class="kpi-label">Emergency Stops</div>
+    <div class="kpi-value" id="kEmergCount">0</div>
+    <div class="kpi-sub">total triggered</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--accent);">
+    <div class="kpi-label">Stuck Events</div>
+    <div class="kpi-value" id="kStuckCount">0</div>
+    <div class="kpi-sub">motion failures</div>
+  </div>
+  <div class="kpi" style="--kpi-color: var(--purple);">
+    <div class="kpi-label">UART Failures</div>
+    <div class="kpi-value" id="kUartFail">0</div>
+    <div class="kpi-sub">comm dropouts</div>
+  </div>
+</div>
+
+<!-- ══ CHARTS — ORIGINAL ══ -->
+<div class="grid" style="margin-top:18px;">
+
+  <!-- 1. Floor Request Frequency -->
+  <div class="card grid-wide">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Floor Request Frequency</div>
+        <div class="card-sub">Total requests received per floor — cabin buttons + hall UP + hall DOWN combined</div>
+      </div>
+      <div class="card-badge">CUMULATIVE</div>
+    </div>
+    <div class="chart-wrap chart-wrap-md">
+      <canvas id="chartFreq"></canvas>
+    </div>
+  </div>
+
+  <!-- 2. Cabin vs Hall Split -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Cabin vs Hall Requests</div>
+        <div class="card-sub">Stacked per floor — inside cabin (SW0–4) vs hall buttons (SW5–12)</div>
+      </div>
+      <div class="card-badge">PER FLOOR</div>
+    </div>
+    <div class="chart-wrap chart-wrap-md">
+      <canvas id="chartSplit"></canvas>
+    </div>
+  </div>
+
+  <!-- 3. Direction Distribution -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Travel Direction Split</div>
+        <div class="card-sub">Percentage of time the lift spent travelling UP vs DOWN</div>
+      </div>
+      <div class="card-badge">TIME %</div>
+    </div>
+    <div class="chart-wrap chart-wrap-md" style="display:flex;justify-content:center;">
+      <canvas id="chartDir" style="max-width:220px;"></canvas>
+    </div>
+  </div>
+
+  <!-- 4. Floor Position Timeline -->
+  <div class="card grid-wide">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Live Floor Timeline</div>
+        <div class="card-sub">Elevator position over the last 60 seconds — updates in real time</div>
+      </div>
+      <div class="card-badge">LAST 60 s</div>
+    </div>
+    <div class="chart-wrap timeline-wrap">
+      <canvas id="chartTimeline"></canvas>
+    </div>
+  </div>
+
+  <!-- 5. Door Open Events per Floor -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Door Open Events per Floor</div>
+        <div class="card-sub">How many times the door opened at each floor (= successful stops)</div>
+      </div>
+      <div class="card-badge">STOPS</div>
+    </div>
+    <div class="chart-wrap chart-wrap-md">
+      <canvas id="chartDoor"></canvas>
+    </div>
+  </div>
+
+  <!-- 6. Idle vs Active Time -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Idle vs Active Time</div>
+        <div class="card-sub">How much time the lift spent idle (waiting) vs actively moving or serving</div>
+      </div>
+      <div class="card-badge">TIME %</div>
+    </div>
+    <div class="chart-wrap chart-wrap-md" style="display:flex;justify-content:center;">
+      <canvas id="chartIdle" style="max-width:220px;"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ PREDICTIVE MAINTENANCE CHARTS ══ -->
+<div class="grid">
+
+  <!-- 7. Health Score Timeline -->
+  <div class="card grid-wide">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Health Score Timeline</div>
+        <div class="card-sub">System health score (0–100) over the last 60 seconds — degradation and recovery visible</div>
+      </div>
+      <div class="card-badge">PRED-MAINT</div>
+    </div>
+    <div class="chart-wrap timeline-wrap">
+      <canvas id="chartHealth"></canvas>
+    </div>
+  </div>
+
+  <!-- 8. Fault Frequency Chart -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Fault Frequency</div>
+        <div class="card-sub">Cumulative count of each fault category since session start</div>
+      </div>
+      <div class="card-badge">FAULTS</div>
+    </div>
+    <div class="chart-wrap chart-wrap-sm">
+      <canvas id="chartFault"></canvas>
+    </div>
+  </div>
+
+  <!-- 9. Direction Reversals Over Time -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Direction Reversal Trend</div>
+        <div class="card-sub">Cumulative direction reversals — rapid growth may indicate control anomaly</div>
+      </div>
+      <div class="card-badge">REVERSALS</div>
+    </div>
+    <div class="chart-wrap chart-wrap-sm">
+      <canvas id="chartReversal"></canvas>
+    </div>
+  </div>
+
+  <!-- 10. Movement vs Door Cycles -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Movement &amp; Door Cycles</div>
+        <div class="card-sub">Cumulative wear-indicator cycles — movement starts and door open events</div>
+      </div>
+      <div class="card-badge">WEAR</div>
+    </div>
+    <div class="chart-wrap chart-wrap-sm">
+      <canvas id="chartCycles"></canvas>
+    </div>
+  </div>
+
+  <!-- 11. Maintenance Event History log -->
+  <div class="card grid-wide">
+    <div class="card-header">
+      <div>
+        <div class="card-title"><span class="live-dot"></span>Maintenance Event History</div>
+        <div class="card-sub">Live event log — INFO / WARNING / CRITICAL events from the predictive maintenance engine</div>
+      </div>
+      <div class="card-badge">LIVE LOG</div>
+    </div>
+    <div class="pm-log-scroll" id="pmLogContainer">
+      <div style="color:#4a5a70;font-size:.6rem;padding:4px 0;">Awaiting data…</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">
+  Connects to <span>ws://localhost:8765</span> — run <span>lift_serial.py</span> first &nbsp;|&nbsp;
+  Data accumulates from session start &nbsp;|&nbsp;
+  <span id="sessionTime">Session: 0s</span>
+</p>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════
+const NUM_FLOORS   = 5;
+const FLOORS       = ['F0','F1','F2','F3','F4'];
+const WS_URL       = 'ws://localhost:8765';
+const MAX_TIMELINE = 60;
+
+// ═══════════════════════════════════════════════════════════
+//  Analytics state
+// ═══════════════════════════════════════════════════════════
+let stats = freshStats();
+
+function freshStats() {
+  return {
+    cabinReqCount:   Array(NUM_FLOORS).fill(0),
+    hallUpCount:     Array(NUM_FLOORS).fill(0),
+    hallDownCount:   Array(NUM_FLOORS).fill(0),
+    doorOpenCount:   Array(NUM_FLOORS).fill(0),
+    tripsUp:         0,
+    tripsDown:       0,
+    totalDoorEvents: 0,
+    ticksIdle:       0,
+    ticksActive:     0,
+    timelineFloors:  [],
+    timelineLabels:  [],
+    prevCabin:       Array(NUM_FLOORS).fill(false),
+    prevHallUp:      Array(4).fill(false),
+    prevHallDown:    Array(4).fill(false),
+    prevDoor:        false,
+    prevFloor:       -1,
+    prevUp:          null,
+    prevDown:        null,
+    prevDoorFloor:   -1,
+    firstFrame:      true,
+    sessionStart:    Date.now(),
+  };
+}
+
+// PM timeline state (accumulates locally from packet data)
+let pmTimeline = {
+  labels:       [],
+  healthScores: [],
+  reversals:    [],   // cumulative at each sample
+  moveCycles:   [],
+  doorCycles:   [],
+};
+
+let lastPMLogCount = 0;
+
+// ═══════════════════════════════════════════════════════════
+//  Chart.js defaults
+// ═══════════════════════════════════════════════════════════
+Chart.defaults.color           = '#8898b0';
+Chart.defaults.font.family     = "'Share Tech Mono', monospace";
+Chart.defaults.font.size       = 11;
+Chart.defaults.borderColor     = '#1e2430';
+Chart.defaults.backgroundColor = 'rgba(0,0,0,0)';
+
+const gridColor = 'rgba(255,255,255,0.05)';
+const tickColor = '#7080a0';
+
+function axisStyle() {
+  return {
+    grid:  { color: gridColor },
+    ticks: { color: tickColor, font: { family: "'Share Tech Mono', monospace", size: 10 } },
+    border:{ color: '#1e2430' }
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+//  1. Floor Request Frequency
+// ═══════════════════════════════════════════════════════════
+const ctxFreq   = document.getElementById('chartFreq').getContext('2d');
+const chartFreq = new Chart(ctxFreq, {
+  type: 'bar',
+  data: {
+    labels: FLOORS,
+    datasets: [{
+      label: 'Total Requests',
+      data: Array(NUM_FLOORS).fill(0),
+      backgroundColor: [
+        'rgba(232,160,32,0.75)','rgba(32,144,255,0.75)',
+        'rgba(32,224,128,0.75)','rgba(160,96,255,0.75)','rgba(32,208,224,0.75)',
+      ],
+      borderColor: [
+        'rgba(232,160,32,1)','rgba(32,144,255,1)',
+        'rgba(32,224,128,1)','rgba(160,96,255,1)','rgba(32,208,224,1)',
+      ],
+      borderWidth: 1, borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y} requests` } } },
+    scales: {
+      x: { ...axisStyle(), title: { display: true, text: 'Floor', color: tickColor } },
+      y: { ...axisStyle(), beginAtZero: true, title: { display: true, text: 'Requests', color: tickColor }, ticks: { ...axisStyle().ticks, stepSize: 1 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  2. Cabin vs Hall Split
+// ═══════════════════════════════════════════════════════════
+const ctxSplit   = document.getElementById('chartSplit').getContext('2d');
+const chartSplit = new Chart(ctxSplit, {
+  type: 'bar',
+  data: {
+    labels: FLOORS,
+    datasets: [
+      { label: 'Cabin Button', data: Array(NUM_FLOORS).fill(0), backgroundColor: 'rgba(232,160,32,0.8)',  borderColor: 'rgba(232,160,32,1)',  borderWidth: 1, borderRadius: 2, stack: 'requests' },
+      { label: 'Hall UP',      data: Array(NUM_FLOORS).fill(0), backgroundColor: 'rgba(32,224,128,0.75)', borderColor: 'rgba(32,224,128,1)', borderWidth: 1, borderRadius: 2, stack: 'requests' },
+      { label: 'Hall DOWN',    data: Array(NUM_FLOORS).fill(0), backgroundColor: 'rgba(32,144,255,0.75)', borderColor: 'rgba(32,144,255,1)', borderWidth: 1, borderRadius: 2, stack: 'requests' },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#9aabbf', font: { size: 10 }, boxWidth: 12, padding: 14 } } },
+    scales: {
+      x: { ...axisStyle(), stacked: true },
+      y: { ...axisStyle(), stacked: true, beginAtZero: true, ticks: { ...axisStyle().ticks, stepSize: 1 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  3. Direction Distribution doughnut
+// ═══════════════════════════════════════════════════════════
+const ctxDir   = document.getElementById('chartDir').getContext('2d');
+const chartDir = new Chart(ctxDir, {
+  type: 'doughnut',
+  data: {
+    labels: ['UP', 'DOWN'],
+    datasets: [{ data: [1,1], backgroundColor: ['rgba(32,224,128,0.8)','rgba(32,144,255,0.8)'], borderColor: ['rgba(32,224,128,1)','rgba(32,144,255,1)'], borderWidth: 2, hoverOffset: 6 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true, cutout: '65%',
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: '#9aabbf', font: { size: 10 }, boxWidth: 12, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => { const total = ctx.dataset.data.reduce((a,b)=>a+b,0); const pct = total ? ((ctx.parsed / total) * 100).toFixed(1) : 0; return ` ${ctx.label}: ${pct}%`; } } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  4. Floor Timeline
+// ═══════════════════════════════════════════════════════════
+const ctxTL      = document.getElementById('chartTimeline').getContext('2d');
+const chartTimeline = new Chart(ctxTL, {
+  type: 'line',
+  data: { labels: [], datasets: [{ label: 'Floor', data: [], borderColor: 'rgba(232,160,32,1)', backgroundColor: 'rgba(232,160,32,0.07)', borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, fill: true, tension: 0, stepped: 'before' }] },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ...axisStyle(), title: { display: true, text: 'Time (s)', color: tickColor }, ticks: { ...axisStyle().ticks, maxTicksLimit: 10 } },
+      y: { ...axisStyle(), min: 0, max: NUM_FLOORS-1, title: { display: true, text: 'Floor', color: tickColor }, ticks: { ...axisStyle().ticks, stepSize: 1, callback: v => 'F'+v } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  5. Door Open Events per Floor
+// ═══════════════════════════════════════════════════════════
+const ctxDoor   = document.getElementById('chartDoor').getContext('2d');
+const chartDoor = new Chart(ctxDoor, {
+  type: 'bar',
+  data: { labels: FLOORS, datasets: [{ label: 'Door Opens', data: Array(NUM_FLOORS).fill(0), backgroundColor: 'rgba(32,208,224,0.75)', borderColor: 'rgba(32,208,224,1)', borderWidth: 1, borderRadius: 4 }] },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x} stops` } } },
+    scales: {
+      x: { ...axisStyle(), beginAtZero: true, ticks: { ...axisStyle().ticks, stepSize: 1 } },
+      y: { ...axisStyle() }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  6. Idle vs Active doughnut
+// ═══════════════════════════════════════════════════════════
+const ctxIdle   = document.getElementById('chartIdle').getContext('2d');
+const chartIdle = new Chart(ctxIdle, {
+  type: 'doughnut',
+  data: { labels: ['Idle','Active'], datasets: [{ data: [1,1], backgroundColor: ['rgba(160,96,255,0.8)','rgba(232,160,32,0.8)'], borderColor: ['rgba(160,96,255,1)','rgba(232,160,32,1)'], borderWidth: 2, hoverOffset: 6 }] },
+  options: {
+    responsive: true, maintainAspectRatio: true, cutout: '65%',
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: '#9aabbf', font: { size: 10 }, boxWidth: 12, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => { const total = ctx.dataset.data.reduce((a,b)=>a+b,0); const pct = total ? ((ctx.parsed / total)*100).toFixed(1) : 0; return ` ${ctx.label}: ${pct}%`; } } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  7. Health Score Timeline (PM chart)
+// ═══════════════════════════════════════════════════════════
+const ctxHealth   = document.getElementById('chartHealth').getContext('2d');
+const chartHealth = new Chart(ctxHealth, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Health Score',
+      data: [],
+      borderColor: 'rgba(32,224,128,1)',
+      backgroundColor: 'rgba(32,224,128,0.06)',
+      borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+      fill: true, tension: 0.3,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ...axisStyle(), title: { display: true, text: 'Time (s)', color: tickColor }, ticks: { ...axisStyle().ticks, maxTicksLimit: 10 } },
+      y: { ...axisStyle(), min: 0, max: 100, title: { display: true, text: 'Score', color: tickColor },
+           ticks: { ...axisStyle().ticks, stepSize: 20 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  8. Fault Frequency Chart (PM chart)
+// ═══════════════════════════════════════════════════════════
+const ctxFault   = document.getElementById('chartFault').getContext('2d');
+const chartFault = new Chart(ctxFault, {
+  type: 'bar',
+  data: {
+    labels: ['Emergency','Stuck','UART Fail','Invalid FSM'],
+    datasets: [{
+      label: 'Count',
+      data: [0, 0, 0, 0],
+      backgroundColor: [
+        'rgba(255,48,48,0.75)', 'rgba(232,160,32,0.75)',
+        'rgba(160,96,255,0.75)', 'rgba(32,144,255,0.75)',
+      ],
+      borderColor: [
+        'rgba(255,48,48,1)', 'rgba(232,160,32,1)',
+        'rgba(160,96,255,1)', 'rgba(32,144,255,1)',
+      ],
+      borderWidth: 1, borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y} events` } } },
+    scales: {
+      x: { ...axisStyle() },
+      y: { ...axisStyle(), beginAtZero: true, ticks: { ...axisStyle().ticks, stepSize: 1 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  9. Direction Reversal Trend (PM chart)
+// ═══════════════════════════════════════════════════════════
+const ctxReversal   = document.getElementById('chartReversal').getContext('2d');
+const chartReversal = new Chart(ctxReversal, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Reversals',
+      data: [],
+      borderColor: 'rgba(232,160,32,1)',
+      backgroundColor: 'rgba(232,160,32,0.08)',
+      borderWidth: 2, pointRadius: 0, fill: true, tension: 0.2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ...axisStyle(), ticks: { ...axisStyle().ticks, maxTicksLimit: 8 } },
+      y: { ...axisStyle(), beginAtZero: true, ticks: { ...axisStyle().ticks, stepSize: 1 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  10. Movement & Door Cycles (PM chart)
+// ═══════════════════════════════════════════════════════════
+const ctxCycles   = document.getElementById('chartCycles').getContext('2d');
+const chartCycles = new Chart(ctxCycles, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [
+      { label: 'Move Cycles', data: [], borderColor: 'rgba(32,144,255,1)',   backgroundColor: 'rgba(32,144,255,0.06)',  borderWidth: 2, pointRadius: 0, fill: false, tension: 0.2 },
+      { label: 'Door Cycles', data: [], borderColor: 'rgba(32,208,224,1)',   backgroundColor: 'rgba(32,208,224,0.06)',  borderWidth: 2, pointRadius: 0, fill: false, tension: 0.2 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#9aabbf', font: { size: 10 }, boxWidth: 12, padding: 10 } } },
+    scales: {
+      x: { ...axisStyle(), ticks: { ...axisStyle().ticks, maxTicksLimit: 8 } },
+      y: { ...axisStyle(), beginAtZero: true, ticks: { ...axisStyle().ticks, stepSize: 5 } }
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  Data ingestion — elevator analytics (original logic)
+// ═══════════════════════════════════════════════════════════
+function ingestFrame(s) {
+  const f = s.floor;
+
+  if (stats.firstFrame) {
+    stats.prevCabin    = s.cabin_req  ? [...s.cabin_req]  : Array(NUM_FLOORS).fill(false);
+    stats.prevHallUp   = s.hall_up    ? [...s.hall_up]    : Array(4).fill(false);
+    stats.prevHallDown = s.hall_down  ? [...s.hall_down]  : Array(4).fill(false);
+    stats.prevDoor     = s.door;
+    stats.prevUp       = s.up;
+    stats.prevDown     = s.down;
+    stats.firstFrame   = false;
+    if (s.door || (!s.idle && (s.up || s.down))) stats.ticksActive++;
+    else stats.ticksIdle++;
+    return;
+  }
+
+  if (s.cabin_req) {
+    for (let i = 0; i < NUM_FLOORS; i++) {
+      if (s.cabin_req[i] && !stats.prevCabin[i]) stats.cabinReqCount[i]++;
+    }
+    stats.prevCabin = [...s.cabin_req];
+  }
+
+  if (s.hall_up) {
+    for (let i = 0; i < 4; i++) {
+      if (s.hall_up[i] && !stats.prevHallUp[i]) stats.hallUpCount[i]++;
+    }
+    stats.prevHallUp = [...s.hall_up];
+  }
+
+  if (s.hall_down) {
+    for (let i = 0; i < 4; i++) {
+      if (s.hall_down[i] && !stats.prevHallDown[i]) stats.hallDownCount[i + 1]++;
+    }
+    stats.prevHallDown = [...s.hall_down];
+  }
+
+  if (s.door && !stats.prevDoor) {
+    if (f >= 0 && f < NUM_FLOORS) { stats.doorOpenCount[f]++; stats.totalDoorEvents++; }
+  }
+  stats.prevDoor = s.door;
+
+  if (s.up && !s.down && !stats.prevUp)   stats.tripsUp++;
+  if (s.down && !s.up && !stats.prevDown) stats.tripsDown++;
+  stats.prevUp   = s.up;
+  stats.prevDown = s.down;
+
+  const isMoving  = (s.up || s.down) && !s.door && !s.idle;
+  const isServing = s.door;
+  if (isMoving || isServing) stats.ticksActive++;
+  else                       stats.ticksIdle++;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PM data ingestion — called when packet.stats present
+// ═══════════════════════════════════════════════════════════
+function ingestPMFrame(packet) {
+  if (!packet.stats || !packet.health) return;
+
+  const elapsed = Math.round((Date.now() - stats.sessionStart) / 1000);
+  const label   = elapsed + 's';
+
+  // Append PM timeline point
+  pmTimeline.labels.push(label);
+  pmTimeline.healthScores.push(packet.health.score);
+  pmTimeline.reversals.push(packet.stats.direction_reversals);
+  pmTimeline.moveCycles.push(packet.stats.movement_cycles);
+  pmTimeline.doorCycles.push(packet.stats.door_cycles);
+
+  // Keep last MAX_TIMELINE samples
+  if (pmTimeline.labels.length > MAX_TIMELINE) {
+    pmTimeline.labels.shift();
+    pmTimeline.healthScores.shift();
+    pmTimeline.reversals.shift();
+    pmTimeline.moveCycles.shift();
+    pmTimeline.doorCycles.shift();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  Timeline — elevator floor, updated every second
+// ═══════════════════════════════════════════════════════════
+let lastFloor = 0;
+
+function tickTimeline() {
+  const elapsed = Math.round((Date.now() - stats.sessionStart) / 1000);
+  stats.timelineFloors.push(lastFloor);
+  stats.timelineLabels.push(elapsed + 's');
+
+  if (stats.timelineFloors.length > MAX_TIMELINE) {
+    stats.timelineFloors.shift();
+    stats.timelineLabels.shift();
+  }
+
+  chartTimeline.data.labels           = [...stats.timelineLabels];
+  chartTimeline.data.datasets[0].data = [...stats.timelineFloors];
+  chartTimeline.update('none');
+
+  document.getElementById('sessionTime').textContent = `Session: ${elapsed}s`;
+}
+
+setInterval(tickTimeline, 1000);
+
+// ═══════════════════════════════════════════════════════════
+//  Chart refresh — originals
+// ═══════════════════════════════════════════════════════════
+function refreshCharts(s) {
+  const totalReq = stats.cabinReqCount.map((c, i) =>
+    c + stats.hallUpCount[i] + stats.hallDownCount[i]);
+
+  chartFreq.data.datasets[0].data = totalReq;
+  chartFreq.update('none');
+
+  chartSplit.data.datasets[0].data = [...stats.cabinReqCount];
+  chartSplit.data.datasets[1].data = [...stats.hallUpCount];
+  chartSplit.data.datasets[2].data = [...stats.hallDownCount];
+  chartSplit.update('none');
+
+  chartDir.data.datasets[0].data = [stats.tripsUp || 0, stats.tripsDown || 0];
+  chartDir.update('none');
+
+  chartDoor.data.datasets[0].data = [...stats.doorOpenCount];
+  chartDoor.update('none');
+
+  chartIdle.data.datasets[0].data = [stats.ticksIdle || 0, stats.ticksActive || 0];
+  chartIdle.update('none');
+
+  const grandTotal = totalReq.reduce((a, b) => a + b, 0);
+  document.getElementById('kTotalReq').textContent   = grandTotal;
+  document.getElementById('kTripsUp').textContent    = stats.tripsUp;
+  document.getElementById('kTripsDown').textContent  = stats.tripsDown;
+  document.getElementById('kDoorEvents').textContent = stats.totalDoorEvents;
+
+  const maxReq = Math.max(...totalReq);
+  if (maxReq > 0) {
+    const busiest = totalReq.indexOf(maxReq);
+    document.getElementById('kBusiest').textContent    = 'F' + busiest;
+    document.getElementById('kBusiestSub').textContent = maxReq + ' total requests';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PM Chart refresh — called on each WS message with pm data
+// ═══════════════════════════════════════════════════════════
+function refreshPMCharts(packet) {
+  if (!packet.stats || !packet.health) return;
+
+  const st = packet.stats;
+  const h  = packet.health;
+
+  // ── KPI numbers ───────────────────────────────
+  const healthEl = document.getElementById('kHealthScore');
+  healthEl.textContent = Math.round(h.score);
+  const statusColors = { EXCELLENT: '#20e080', GOOD: '#60d0a0', WARNING: '#e8a020', CRITICAL: '#ff3030' };
+  healthEl.style.color = statusColors[h.status] || '#20e080';
+  document.getElementById('kHealthStatus').textContent  = h.status;
+  document.getElementById('kEmergCount').textContent    = st.emergency_count;
+  document.getElementById('kStuckCount').textContent    = st.stuck_events;
+  document.getElementById('kUartFail').textContent      = st.uart_failures;
+
+  // ── Health timeline chart ──────────────────────
+  const healthColor = h.score >= 85 ? 'rgba(32,224,128,1)' :
+                      h.score >= 65 ? 'rgba(96,208,160,1)' :
+                      h.score >= 40 ? 'rgba(232,160,32,1)' : 'rgba(255,48,48,1)';
+  chartHealth.data.labels           = [...pmTimeline.labels];
+  chartHealth.data.datasets[0].data = [...pmTimeline.healthScores];
+  chartHealth.data.datasets[0].borderColor     = healthColor;
+  chartHealth.data.datasets[0].backgroundColor = healthColor.replace(',1)', ',0.07)');
+  chartHealth.update('none');
+
+  // ── Fault frequency chart ──────────────────────
+  chartFault.data.datasets[0].data = [
+    st.emergency_count,
+    st.stuck_events,
+    st.uart_failures,
+    st.invalid_state_count,
+  ];
+  chartFault.update('none');
+
+  // ── Reversal trend chart ───────────────────────
+  chartReversal.data.labels           = [...pmTimeline.labels];
+  chartReversal.data.datasets[0].data = [...pmTimeline.reversals];
+  chartReversal.update('none');
+
+  // ── Cycles chart ───────────────────────────────
+  chartCycles.data.labels           = [...pmTimeline.labels];
+  chartCycles.data.datasets[0].data = [...pmTimeline.moveCycles];
+  chartCycles.data.datasets[1].data = [...pmTimeline.doorCycles];
+  chartCycles.update('none');
+
+  // ── Maintenance log ────────────────────────────
+  const logs = packet.maintenance_log || [];
+  if (logs.length !== lastPMLogCount) {
+    lastPMLogCount = logs.length;
+    const container = document.getElementById('pmLogContainer');
+    container.innerHTML = '';
+    if (logs.length === 0) {
+      container.innerHTML = '<div style="color:#4a5a70;font-size:.6rem;padding:4px 0;">No events yet</div>';
+    } else {
+      [...logs].reverse().forEach(entry => {
+        const row = document.createElement('div');
+        row.className = 'log-entry';
+        row.innerHTML =
+          `<span class="log-ts">${entry.timestamp}</span>` +
+          `<span class="log-level-${entry.level}">[${entry.level}]</span>` +
+          `<span class="log-msg">${entry.message}</span>`;
+        container.appendChild(row);
+      });
+      container.scrollTop = 0;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  Reset
+// ═══════════════════════════════════════════════════════════
+function resetAll() {
+  stats = freshStats();
+  pmTimeline = { labels: [], healthScores: [], reversals: [], moveCycles: [], doorCycles: [] };
+  lastPMLogCount = 0;
+
+  [chartFreq, chartSplit, chartDoor].forEach(c => {
+    c.data.datasets.forEach(d => d.data.fill(0));
+    c.update('none');
+  });
+  chartDir.data.datasets[0].data   = [1, 1];
+  chartIdle.data.datasets[0].data  = [1, 1];
+  chartTimeline.data.labels        = [];
+  chartTimeline.data.datasets[0].data = [];
+  [chartDir, chartIdle, chartTimeline].forEach(c => c.update('none'));
+
+  chartHealth.data.labels           = [];
+  chartHealth.data.datasets[0].data = [];
+  chartHealth.update('none');
+
+  chartFault.data.datasets[0].data = [0, 0, 0, 0];
+  chartFault.update('none');
+
+  chartReversal.data.labels           = [];
+  chartReversal.data.datasets[0].data = [];
+  chartReversal.update('none');
+
+  chartCycles.data.labels           = [];
+  chartCycles.data.datasets.forEach(d => d.data = []);
+  chartCycles.update('none');
+
+  document.getElementById('kTotalReq').textContent   = '0';
+  document.getElementById('kBusiest').textContent    = '—';
+  document.getElementById('kBusiestSub').textContent = 'no data yet';
+  document.getElementById('kTripsUp').textContent    = '0';
+  document.getElementById('kTripsDown').textContent  = '0';
+  document.getElementById('kDoorEvents').textContent = '0';
+  document.getElementById('kHealthScore').textContent= '—';
+  document.getElementById('kHealthStatus').textContent = '—';
+  document.getElementById('kEmergCount').textContent = '0';
+  document.getElementById('kStuckCount').textContent = '0';
+  document.getElementById('kUartFail').textContent   = '0';
+  document.getElementById('pmLogContainer').innerHTML =
+    '<div style="color:#4a5a70;font-size:.6rem;padding:4px 0;">Reset — awaiting data</div>';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  WebSocket
+// ═══════════════════════════════════════════════════════════
+const badge = document.getElementById('badge');
+
+function connect() {
+  let ws;
+  try { ws = new WebSocket(WS_URL); } catch(e) { scheduleReconnect(); return; }
+
+  ws.onopen = () => {
+    badge.className  = 'badge ok';
+    badge.textContent = '⬤ CONNECTED';
+  };
+
+  ws.onmessage = ev => {
+    try {
+      const packet = JSON.parse(ev.data);
+      // State is both top-level (backward compat) and packet.state
+      const s = packet.state || packet;
+      lastFloor = s.floor;
+
+      ingestFrame(s);
+      refreshCharts(s);
+
+      // PM data (only present in new lift_serial.py output)
+      if (packet.health) {
+        ingestPMFrame(packet);
+        refreshPMCharts(packet);
+      }
+    } catch(e) {}
+  };
+
+  ws.onclose = () => {
+    badge.className   = 'badge err';
+    badge.textContent = '⬤ DISCONNECTED';
+    scheduleReconnect();
+  };
+
+  ws.onerror = () => {
+    badge.className   = 'badge err';
+    badge.textContent = '⬤ ERROR';
+  };
+}
+
+function scheduleReconnect() { setTimeout(connect, 3000); }
+
+connect();
+</script>
+</body>
+</html>
